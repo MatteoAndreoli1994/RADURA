@@ -1,0 +1,16 @@
+<!-- Cookiebot: tutto si configura dal manager (manager.cookiebot.com) -->
+<!-- Il sito applica solo override mobile in src/app/globals.css (barra in basso + compatto). -->
+<!-- Desktop: solo Cookiebot. Custom HTML / Custom CSS nel manager: lasciali VUOTI. -->
+
+<!-- Configuration → Design -->
+<!-- - Template: standard (Multilevel, Edge, ecc.) — NON Custom -->
+<!-- - Custom HTML / Custom CSS: VUOTI -->
+<!-- - Colori, testi, posizione: solo dal pannello Cookiebot -->
+<!-- Disattiva anche "Show privacy button" nel manager Cookiebot -->
+<!-- Il sito nasconde il widget rotondo via globals.css; riapertura solo da link Cookies nel footer -->
+
+<!-- Configuration → Content -->
+<!-- Testi in italiano, es. link a https://radura.netlify.app/legal#cookies -->
+
+<!-- I file banner.html e banner.css in questa cartella NON sono usati dal sito. -->
+<!-- Servono solo se in futuro volessi incollarli manualmente nel manager (sconsigliato). -->

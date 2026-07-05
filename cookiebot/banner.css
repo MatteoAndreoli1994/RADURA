@@ -1,0 +1,117 @@
+/* Incolla in Cookiebot → Configuration → Design → Custom CSS */
+/* Layout allineato a src/app/globals.css */
+
+#CybotCookiebotDialog.radura-cookiebot,
+#CybotCookiebotDialog.radura-cookiebot * {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
+#CybotCookiebotDialog.radura-cookiebot {
+  position: fixed !important;
+  inset: auto 0 0 0 !important;
+  width: 100% !important;
+  max-height: 25dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  z-index: 2147483640 !important;
+}
+
+.radura-cookiebot-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 25dvh;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px)) 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.radura-cookiebot-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #000000;
+}
+
+.radura-cookiebot-text {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.72);
+}
+
+.radura-cookiebot-text a {
+  color: #000000;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.radura-cookiebot-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.radura-cookiebot-accept {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid #000000;
+  border-radius: 0;
+  background: #ffffff;
+  color: #000000;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+}
+
+.radura-cookiebot-accept:hover {
+  background: #f7f7f7;
+}
+
+.radura-cookiebot-details {
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 10px;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+#CybotCookiebotDialog.radura-cookiebot #CybotCookiebotDialogPoweredbyLink,
+#CybotCookiebotDialog.radura-cookiebot .CybotCookiebotDialogPoweredbyLink,
+#CybotCookiebotDialog.radura-cookiebot #CybotCookiebotDialogHeaderLogosWrapper {
+  display: none !important;
+}
+
+@media screen and (max-width: 767px) {
+  .radura-cookiebot-inner {
+    gap: 8px;
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)) 14px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .radura-cookiebot-inner {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 16px 24px calc(16px + env(safe-area-inset-bottom, 0px)) 24px;
+  }
+}

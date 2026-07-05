@@ -1,0 +1,361 @@
+.section {
+  --release-top-desktop: 0;
+}
+
+.mobileLayout {
+  display: block;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.desktopLayout {
+  display: none;
+}
+
+.coverFrame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  line-height: 0;
+  background: #f5f5f3;
+}
+
+.coverImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.metaBlock {
+  width: 100%;
+}
+
+.metaLabel {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.releasedHeaderRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.releasedInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.releasedHeaderRow .metaLabel {
+  flex: none;
+  min-width: 0;
+}
+
+.releasedDate {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #000;
+}
+
+.inlineShare {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  height: 19px;
+  margin: 0;
+  padding: 0 9px;
+  border: 1px solid #000;
+  outline: none;
+  box-shadow: none;
+  background: #fff;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 200ms ease;
+}
+
+.inlineShare:hover {
+  opacity: 0.55;
+}
+
+.tracklistBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.tracklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  font-size: 10px;
+}
+
+.trackItem {
+  margin: 0;
+  padding: 0;
+}
+
+.trackItem + .trackItem {
+  margin-top: 0.08em;
+}
+
+.trackButton {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: inherit;
+  line-height: 1.25;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #000;
+  cursor: pointer;
+  transition: color 200ms ease, opacity 200ms ease;
+}
+
+.trackIndex {
+  line-height: 1.25;
+}
+
+.trackTitle {
+  line-height: 1.15;
+}
+
+.trackButton:hover {
+  opacity: 0.55;
+}
+
+.trackButtonActive {
+  color: #999;
+}
+
+.trackButtonActive:hover {
+  opacity: 1;
+}
+
+.trackButtonInactive,
+.trackButton:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.trackButtonInactive:hover,
+.trackButton:disabled:hover {
+  opacity: 1;
+}
+
+.albumHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.albumTitle {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: #000;
+}
+
+.artistName {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #999;
+}
+
+.artistLink {
+  font: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 200ms ease;
+}
+
+.artistLink:hover {
+  opacity: 0.55;
+}
+
+.credits {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.15em 0 0;
+  font-size: 10px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #000;
+}
+
+.credits p {
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+.mobilePlayerSpacer {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobileReleaseShell {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .mobileAlbumHeaderRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mobileAlbumHeaderRow .albumHeader {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .mobileLayout .metaBlock {
+    margin-top: 0;
+  }
+
+  .mobileLayout .releasedInfo {
+    gap: 4px;
+  }
+
+  .mobileLayout .tracklistBlock {
+    margin-top: 0;
+    gap: 4px;
+  }
+
+  .mobileLayout .credits {
+    margin-top: 0;
+  }
+
+  .mobilePlayerSpacer {
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: 0;
+    padding-bottom: var(
+      --site-music-player-height,
+      calc(
+        var(--mobile-site-player-content-height, 2.25rem) + env(safe-area-inset-bottom, 0px)
+      )
+    );
+  }
+}
+
+@media (min-width: 768px) {
+  .mobileLayout {
+    display: none;
+  }
+
+  .desktopLayout {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 20px;
+    width: 100%;
+    padding-top: var(--release-top-desktop);
+    padding-bottom: 0;
+    align-items: start;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .leftCol {
+    grid-column: 3 / span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .metaBlock {
+    margin-top: 24px;
+  }
+
+  .tracklistBlock {
+    margin-top: 16px;
+  }
+
+  .coverFrame + .tracklistBlock {
+    margin-top: 24px;
+  }
+
+  .rightCol {
+    grid-column: 6 / 11;
+    min-width: 0;
+    padding-top: 10px;
+  }
+
+  @media (max-width: 1280px) {
+    .rightCol {
+      grid-column: 6 / -1;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .rightCol {
+      grid-column: 7 / -1;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .rightCol {
+      grid-column: 7 / -1;
+    }
+  }
+}

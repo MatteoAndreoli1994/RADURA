@@ -1,0 +1,1470 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Diatype";
+  src: url("/fonts/ABCDiatype-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #fdfcfa;
+  --foreground: #0a0a0a;
+  --muted: #525252;
+  --accent: #171717;
+  --artist: #7a7166;
+  --cream: var(--background);
+  --site-pad-x: 1.25rem;
+  --mobile-site-pad-x: var(--home-mobile-pad-x);
+  --home-mobile-pad-x: 1.25rem;
+  --home-mobile-photo-pad-x: var(--home-mobile-pad-x);
+  --site-pad-x-sm: 2rem;
+  --site-pad-x-md: 3.5rem;
+  --nav-offset: 5.5rem;
+  --player-height: 28px;
+  --site-music-player-height: 0px;
+  --site-player-bar-height: 28px;
+  --site-music-player-bar-offset: calc(
+    var(--site-player-bar-height, 28px) + env(safe-area-inset-bottom, 0px)
+  );
+  --site-grid-margin-x: var(--home-mobile-pad-x);
+  --nav-bottom-lift: 1rem;
+  --music-x-line: 25vh;
+  --mobile-stacked-footer-row-gap: 1.5rem;
+  --app-height: 100vh;
+  --app-height-half: 50vh;
+  --font-diatype: "Diatype", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-eb-garamond-fallback: Georgia, "Times New Roman", serif;
+  --font-sneaky-fallback: Georgia, "Times New Roman", serif;
+  --design-width: 1280px;
+  --desktop-scale: 1;
+  --site-chrome-right: 79px;
+  --site-nav-top: 50px;
+  --site-chrome-bottom: 24px;
+  --in-flow-nav-clearance: calc(var(--site-nav-top) + 20px + env(safe-area-inset-top, 0px));
+  --in-flow-footer-block: calc(
+    48px + 21px + var(--site-chrome-bottom) + env(safe-area-inset-bottom, 0px)
+  );
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --app-height: 100dvh;
+    --app-height-half: 50dvh;
+  }
+}
+
+@supports (height: 100lvh) {
+  :root {
+    --app-height: 100lvh;
+    --app-height-half: 50lvh;
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --nav-offset: 6rem;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --site-grid-margin-x: var(--home-mobile-pad-x);
+    --mobile-footer-offset: calc(2.75rem + env(safe-area-inset-bottom, 0px));
+    --mobile-site-player-content-height: 2.25rem;
+    --mobile-player-bar-height: var(--mobile-site-player-content-height);
+    --mobile-player-footer-gap: 0.75rem;
+    --mobile-player-offset: calc(
+      var(--mobile-player-bar-height) + var(--mobile-player-footer-gap) +
+        env(safe-area-inset-bottom, 0px)
+    );
+    --mobile-nav-row-height: 2.5rem;
+    --mobile-nav-header-padding: 1rem;
+    --mobile-content-below-nav: calc(
+      env(safe-area-inset-top, 0px) + var(--mobile-nav-header-padding) +
+        var(--mobile-nav-row-height) + var(--mobile-nav-header-padding)
+    );
+    --mobile-music-list-extra-gap: 1.25rem;
+    --mobile-stacked-footer-edge: calc(1rem + env(safe-area-inset-bottom, 0px));
+    --about-mobile-player-extra-gap: 4.5rem;
+    --site-music-player-bar-offset: calc(
+      var(--mobile-site-player-content-height) + env(safe-area-inset-bottom, 0px)
+    );
+  }
+
+  .in-flow-page-content {
+    box-sizing: border-box;
+  }
+
+  :root:has(.site-mobile-player) #home,
+  :root:has(.site-mobile-player) #discography,
+  :root:has(.site-mobile-player) #lives,
+  html.site-has-mobile-player #home,
+  html.site-has-mobile-player #discography,
+  html.site-has-mobile-player #lives {
+    padding-bottom: calc(
+      var(--site-music-player-height, 0px) + var(--mobile-player-footer-gap, 0.75rem)
+    );
+  }
+
+  :root:has(.site-mobile-player) #biography,
+  html.site-has-mobile-player #biography {
+    padding-bottom: calc(
+      var(--site-music-player-height, 0px) + var(--about-mobile-player-extra-gap, 4.5rem)
+    );
+  }
+
+  :root:has(.site-mobile-player) .pb-mobile-footer,
+  html.site-has-mobile-player .pb-mobile-footer {
+    padding-bottom: calc(
+      var(--site-music-player-height, 0px) + var(--mobile-player-footer-gap, 0.75rem)
+    );
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nav-offset: 4rem;
+    --nav-bottom-offset: 3.25rem;
+    --player-height: 28px;
+    --site-music-player-height: 0px;
+    --site-player-bar-height: 28px;
+    --site-music-player-bar-offset: calc(
+      var(--site-player-bar-height, 28px) + env(safe-area-inset-bottom, 0px)
+    );
+    --site-grid-margin-x: 50px;
+    --nav-bottom-lift: 1.5rem;
+    --desktop-site-footer-offset: calc(
+      2.75rem + env(safe-area-inset-bottom, 0px)
+    );
+    --biography-bottom-clearance: calc(
+      env(safe-area-inset-bottom, 0px) + var(--nav-bottom-lift) + 1.25rem
+    );
+  }
+
+  .site-shell--about {
+    --nav-offset: calc(50px + 20px + env(safe-area-inset-top, 0px));
+    --about-logo-block-height: 20px;
+    --about-nav-links-top-gap: 48px;
+    --about-content-start: calc(
+      var(--site-nav-top) + var(--about-logo-block-height) + var(--about-nav-links-top-gap) +
+        env(safe-area-inset-top, 0px)
+    );
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: var(--background);
+  }
+
+  .site-shell--home {
+    --nav-offset: calc(50px + 20px + env(safe-area-inset-top, 0px));
+    --about-logo-block-height: 20px;
+    --about-nav-links-top-gap: 48px;
+    --about-content-start: calc(
+      var(--site-nav-top) + var(--about-logo-block-height) + var(--about-nav-links-top-gap) +
+        env(safe-area-inset-top, 0px)
+    );
+    overflow: hidden;
+    background: var(--background);
+  }
+
+  .site-shell--home .in-flow-page-content {
+    padding-top: var(--about-content-start);
+    min-height: 0;
+  }
+
+  .site-shell--about .in-flow-page-content {
+    padding-top: var(--about-content-start);
+  }
+
+  .in-flow-page-footer {
+    display: none;
+  }
+
+  .in-flow-page-content {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    width: 100%;
+    padding-top: var(--in-flow-nav-clearance);
+    min-height: 100dvh;
+    min-height: 100vh;
+  }
+
+  .in-flow-page-content > .release-page-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    width: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .in-flow-page-content > .release-page-body {
+      flex: 1 1 auto;
+    }
+  }
+
+  .in-flow-page-footer {
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: auto;
+    min-height: calc(21px + 2 * var(--site-chrome-bottom) + 24px);
+    padding-top: 28px;
+    padding-bottom: calc(
+      var(--site-music-player-height, 0px) + var(--site-chrome-bottom) + 24px +
+        env(safe-area-inset-bottom, 0px)
+    );
+    pointer-events: auto;
+  }
+
+  .in-flow-page-footer > div {
+    width: 100%;
+  }
+
+  #biography footer.in-flow-page-footer,
+  #discography footer.in-flow-page-footer {
+    background: transparent;
+  }
+
+  #discography .music-footer-slot {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  #discography .music-footer-slot .in-flow-page-footer {
+    background: transparent;
+    pointer-events: auto;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-artist: var(--artist);
+  --color-cream: var(--cream);
+  --font-garamond: var(--font-eb-garamond), var(--font-eb-garamond-fallback);
+  --font-sneaky: var(--font-sneaky-times), var(--font-sneaky-fallback);
+  --font-sans: var(--font-sneaky);
+  --font-serif: var(--font-garamond);
+}
+
+@utility font-garamond {
+  font-family: var(--font-garamond);
+  font-weight: 400;
+}
+
+@utility font-sneaky {
+  font-family: var(--font-sneaky);
+}
+
+@utility font-inconsolata {
+  font-family: var(--font-inconsolata), Inconsolata, ui-monospace, monospace;
+  font-weight: 400;
+}
+
+@utility text-player-time {
+  font-family: var(--font-inconsolata), Inconsolata, ui-monospace, monospace;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  height: 100%;
+  overscroll-behavior: none;
+  font-family: var(--font-sneaky);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 17px;
+}
+
+*,
+*::before,
+*::after {
+  font-family: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+}
+
+button.text-logo {
+  font-family: var(--font-dm-sans), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: -0.05em;
+  font-style: normal;
+}
+
+nav.text-nav button:not(.text-logo),
+button.text-nav {
+  font-family: var(--font-sneaky);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.05em;
+  font-style: normal;
+}
+
+.site-navbar,
+.site-navbar button:not(.text-logo):not(.about-radura-logo):not(.about-nav-link) {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  font-style: normal;
+}
+
+button.about-radura-logo {
+  font-family: "Arial Black", "Arial-Black", Arial, sans-serif;
+  font-weight: 900;
+  font-synthesis: none;
+  font-size: 20px;
+  line-height: 20px;
+  letter-spacing: -0.04em;
+  font-style: normal;
+  color: #2e2e2e;
+  width: auto;
+  transition: color 200ms ease;
+}
+
+button.about-radura-logo.about-radura-logo--light {
+  color: #fff;
+}
+
+button.about-radura-logo.about-radura-logo--light:hover {
+  color: #999;
+}
+
+.radura-blend-chrome {
+  position: fixed;
+  z-index: 50;
+  background: transparent !important;
+  mix-blend-mode: difference;
+  -webkit-mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.radura-blend-chrome__inner {
+  pointer-events: auto;
+}
+
+.radura-blend-chrome :is(button.about-radura-logo, .about-radura-logo) {
+  color: #fff !important;
+}
+
+.radura-blend-chrome :is(button.about-radura-logo, .about-radura-logo):hover {
+  opacity: 0.7;
+}
+
+.radura-blend-chrome--disabled {
+  mix-blend-mode: normal;
+  -webkit-mix-blend-mode: normal;
+}
+
+.radura-blend-chrome--disabled :is(button.about-radura-logo, .about-radura-logo) {
+  color: #000 !important;
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  button.about-radura-logo {
+    width: auto;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: -0.05em;
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+button.about-nav-link {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  font-style: normal;
+  color: #999;
+  transition: color 200ms ease;
+}
+
+button.about-nav-link:hover {
+  color: #000;
+}
+
+button.about-nav-link.about-nav-link--light {
+  color: #fff;
+}
+
+button.about-nav-link.about-nav-link--light:hover {
+  color: #999;
+}
+
+button.about-nav-link.about-nav-link--light[aria-current="page"] {
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  button.about-nav-link {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+button.text-discography {
+  font-family: var(--font-garamond);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.05em;
+  font-style: normal;
+}
+
+.music-player-bar button.text-album,
+.site-chrome-control button.text-album {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.music-player-bar .text-player-time,
+.site-chrome-control .text-player-time {
+  font-family: var(--font-inconsolata), Inconsolata, ui-monospace, monospace;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+body {
+  height: var(--app-height);
+  min-height: var(--app-height);
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sneaky);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  line-height: 17px;
+}
+
+/* Safari: native video layers can steal taps above fixed UI */
+video {
+  pointer-events: none;
+}
+
+.site-shell {
+  isolation: auto;
+}
+
+/* Desktop > 1280px: lock layout to 1280px design and scale up proportionally */
+@media (min-width: 1281px) {
+  :root {
+    /* length / length → unitless ratio (e.g. 1.5 at 1920px) */
+    --desktop-scale: calc(100vw / var(--design-width));
+    --site-grid-margin-x: calc(50px * var(--desktop-scale));
+  }
+
+  .site-shell-scale {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--design-width);
+    height: calc(var(--app-height) / var(--desktop-scale));
+    min-height: calc(var(--app-height) / var(--desktop-scale));
+    transform: translateX(-50%) scale(var(--desktop-scale));
+    transform-origin: top center;
+  }
+
+  .site-shell-scale .site-content {
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .site-shell-scale .site-chrome {
+    height: 0;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .site-shell-scale .h-dvh {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100%;
+  }
+
+  .site-shell-scale .min-h-dvh {
+    min-height: 100% !important;
+  }
+
+  .site-shell:not(.site-shell--about) .site-shell-scale .site-content > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    max-height: 100%;
+  }
+
+  .site-shell:not(.site-shell--about) #discography:has(.music-list-desktop) {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .site-shell:not(.site-shell--about) #discography .music-list-desktop {
+    flex: 1 1 auto;
+    height: 100%;
+    min-height: 0;
+    max-height: 100%;
+  }
+
+  .site-shell:not(.site-shell--about) #discography .music-list-desktop .h-dvh {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+  }
+
+  .site-shell--about .site-shell-scale {
+    height: auto;
+    min-height: calc(var(--app-height) / var(--desktop-scale));
+  }
+
+  .site-shell--about .site-shell-scale .site-content {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100%;
+  }
+
+  .site-shell--home .site-shell-scale {
+    height: 100%;
+    min-height: calc(var(--app-height) / var(--desktop-scale));
+  }
+
+  .site-shell--home .site-shell-scale .site-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .site-shell--about .in-flow-page-content {
+    flex: 1 1 auto;
+    min-height: calc(var(--app-height) / var(--desktop-scale));
+    height: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html:has(.newsletter-page),
+  html:has(.newsletter-page) body {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    height: var(--app-height);
+    max-height: var(--app-height);
+  }
+
+  .site-shell {
+    isolation: auto;
+    overflow: visible;
+  }
+
+  .site-content {
+    overflow: visible;
+  }
+
+  .site-shell,
+  .site-content {
+    height: var(--app-height);
+    min-height: var(--app-height);
+  }
+
+  .site-chrome {
+    height: 0;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .site-shell--home {
+    overflow: hidden;
+  }
+
+  .site-shell--home .site-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  #home {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+  }
+}
+
+.site-chrome-top,
+.site-chrome-bottom,
+.site-chrome-control {
+  pointer-events: auto;
+}
+
+.site-chrome-top.is-release-view,
+.site-chrome-top.is-release-view nav {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.site-chrome-top.is-release-view {
+  pointer-events: none;
+}
+
+.site-chrome-top.is-release-view nav,
+.site-chrome-top.is-release-view button {
+  pointer-events: auto;
+}
+
+.site-chrome-top button,
+.site-chrome-bottom button,
+.site-chrome-control button {
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+@utility text-site {
+  font-size: 15px;
+  line-height: 17px;
+}
+
+@utility text-album {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@utility text-logo {
+  font-family: var(--font-dm-sans), "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: -0.05em;
+}
+
+h1.newsletter-radura-logo {
+  font-size: 47px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@media (min-width: 640px) {
+  h1.newsletter-radura-logo {
+    font-size: 48px;
+  }
+}
+
+@utility text-discography {
+  font-family: var(--font-garamond);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.05em;
+  font-style: normal;
+}
+
+@utility text-track {
+  font-family: var(--font-garamond);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.05em;
+  font-style: normal;
+}
+
+@utility text-release-title {
+  font-family: var(--font-garamond);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.12;
+  letter-spacing: -0.05em;
+  font-style: normal;
+}
+
+@utility text-artist {
+  font-size: 15px;
+  line-height: 17px;
+  color: var(--artist);
+}
+
+.release-player-right {
+  container-type: inline-size;
+  container-name: release-player-main;
+}
+
+.release-player-title {
+  overflow: hidden;
+  text-wrap: balance;
+  line-height: 1.12;
+  padding-bottom: 0.04em;
+}
+
+#discography {
+  --music-text-size: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: var(--music-text-size);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 767px) {
+  #discography:has(.music-mobile-list) {
+    padding-bottom: calc(var(--mobile-stacked-footer-edge) + 2.5rem);
+  }
+
+  html.site-has-mobile-player #discography:has(.music-mobile-list) {
+    padding-bottom: calc(
+      var(--mobile-stacked-footer-edge) + 2.5rem + var(--site-music-player-height, 0px) +
+        var(--mobile-player-footer-gap, 0.75rem)
+    );
+  }
+}
+
+#lives {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 768px) {
+  #lives .in-flow-page-content {
+    padding-top: var(--about-content-start);
+  }
+}
+
+#discography button.text-nav,
+#discography .text-nav,
+#discography button.text-discography,
+#discography .text-discography,
+#discography .text-track,
+#discography .text-release-title,
+#discography .release-player-title,
+#discography .release-player-track-title,
+#discography .release-player-time,
+#discography .text-player-time {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: var(--music-text-size);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+#discography .mobile-stacked-footer-shell a,
+#discography .mobile-stacked-footer-shell button,
+#discography .mobile-stacked-footer-shell p {
+  font-size: var(--music-text-size);
+}
+
+@media (max-width: 767px) {
+  .release-player-cover,
+  .release-player-right {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .release-player-layout {
+    grid-template-columns:
+      repeat(4, minmax(4.25rem, 1fr))
+      repeat(8, minmax(0, 1fr));
+  }
+
+  .release-player-cover {
+    max-width: 29.9375rem;
+    justify-self: start;
+  }
+}
+
+.release-player-widget {
+  container-type: inline-size;
+  container-name: release-player;
+}
+
+.release-player-meta .release-player-track-title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  line-height: 1.15;
+}
+
+.release-player-meta .release-player-time {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.release-player-meta .release-player-share {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  letter-spacing: -0.03em;
+  border: 1px solid #000;
+  border-width: 1px;
+  outline: none;
+  box-shadow: none;
+}
+
+.release-player-buy {
+  width: 100%;
+}
+
+.release-buy-button {
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .release-player-share {
+    flex: 0 0 auto;
+    max-width: none;
+  }
+}
+
+.release-player-widget__seek-track {
+  height: 3px;
+  background: rgb(0 0 0 / 8%);
+}
+
+.release-player-widget__seek-fill {
+  height: 3px;
+  background: rgb(122 113 102 / 55%);
+}
+
+.release-tracklist-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) 3.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0.55rem 0;
+  text-align: left;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.release-tracklist-row:hover {
+  opacity: 0.72;
+}
+
+.release-tracklist-row.is-active {
+  background: rgb(0 0 0 / 4%);
+}
+
+@utility text-nav {
+  font-family: var(--font-sneaky);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.05em;
+  font-style: normal;
+}
+
+@utility leading-site {
+  line-height: 17px;
+}
+
+@utility px-site {
+  padding-left: var(--site-pad-x);
+  padding-right: var(--site-pad-x);
+}
+
+@utility scroll-mt-nav {
+  scroll-margin-top: var(--nav-offset);
+}
+
+@utility pt-nav {
+  padding-top: var(--nav-offset);
+}
+
+@utility pb-nav {
+  padding-bottom: var(--nav-bottom-offset, 0px);
+}
+
+@utility pb-mobile-footer {
+  @media (max-width: 767px) {
+    padding-bottom: var(--mobile-footer-offset);
+  }
+}
+
+.mobile-stacked-footer-shell {
+  width: 100%;
+  background: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 767px) {
+  .mobile-stacked-footer-shell {
+    margin-top: var(--mobile-stacked-footer-edge);
+    padding-bottom: var(--mobile-stacked-footer-edge);
+  }
+
+  .mobile-stacked-footer-shell::before {
+    margin-bottom: var(--mobile-stacked-footer-edge);
+  }
+}
+
+.mobile-stacked-footer-shell::before {
+  content: "";
+  display: block;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mobile-stacked-footer-shell--light::before {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+.mobile-stacked-footer-scroll {
+  margin-top: 4rem;
+}
+
+@utility section-heading {
+  text-align: center;
+  font-size: 15px;
+  line-height: 17px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.nav-link-hover {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-comma-list {
+  display: inline;
+}
+
+.nav-comma-list > .nav-link-hover {
+  display: inline;
+}
+
+.nav-comma-list > .nav-link-hover:not(:first-child)::before {
+  content: ",";
+  margin-right: 0.35em;
+  font-style: normal;
+}
+
+.nav-link-hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link-hover:hover::after,
+  .group:hover .release-card-meta .nav-link-hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.live-link {
+  display: inline-flex;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.live-link::after {
+  content: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .live-link:hover,
+  .live-link:focus-visible {
+    color: var(--muted);
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+  background: transparent;
+}
+
+.nav-bracket-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-bracket-link::after {
+  content: none;
+}
+
+.nav-bracket-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-bracket-label-text {
+  display: block;
+  line-height: 22px;
+}
+
+.nav-bracket {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  display: flex;
+  height: 22px;
+  align-items: center;
+  font-style: normal;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.24s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.14s ease 0.2s;
+}
+
+.nav-bracket-left {
+  right: 100%;
+  padding-right: 0.05em;
+  transform: translateX(0.18em);
+}
+
+.nav-bracket-right {
+  left: 100%;
+  padding-left: 0.05em;
+  transform: translateX(-0.18em);
+}
+
+@keyframes nav-bracket-close-left {
+  from {
+    transform: translateX(-0.32em);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(-0.06em);
+    opacity: 1;
+  }
+}
+
+@keyframes nav-bracket-close-right {
+  from {
+    transform: translateX(0.32em);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(0.06em);
+    opacity: 1;
+  }
+}
+
+.nav-bracket-left.is-on {
+  animation: nav-bracket-close-left 0.28s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  transition:
+    transform 0.28s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 0.2s ease;
+}
+
+.nav-bracket-right.is-on {
+  animation: nav-bracket-close-right 0.28s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  transition:
+    transform 0.28s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-bracket-link:hover .nav-bracket-left:not(.is-on) {
+    animation: nav-bracket-close-left 0.28s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  }
+
+  .nav-bracket-link:hover .nav-bracket-right:not(.is-on) {
+    animation: nav-bracket-close-right 0.28s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  }
+
+  .nav-bracket-link:hover .nav-bracket-left.is-on,
+  .nav-bracket-link:hover .nav-bracket-right.is-on {
+    animation: none;
+  }
+
+  .nav-bracket-link:hover .nav-bracket-left.is-on {
+    transform: translateX(-0.06em);
+    opacity: 1;
+    transition: none;
+  }
+
+  .nav-bracket-link:hover .nav-bracket-right.is-on {
+    transform: translateX(0.06em);
+    opacity: 1;
+    transition: none;
+  }
+
+  /* Nascondi la sezione attiva solo mentre un'altra voce è in hover */
+  .nav-bracket-group:has(.nav-bracket-link:hover)
+    .nav-bracket-link:not(:hover)
+    .nav-bracket.is-on {
+    animation: none;
+    opacity: 0;
+    transition:
+      transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.14s ease 0.22s;
+  }
+
+  .nav-bracket-group:has(.nav-bracket-link:hover)
+    .nav-bracket-link:not(:hover)
+    .nav-bracket-left.is-on {
+    transform: translateX(0.18em);
+  }
+
+  .nav-bracket-group:has(.nav-bracket-link:hover)
+    .nav-bracket-link:not(:hover)
+    .nav-bracket-right.is-on {
+    transform: translateX(-0.18em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-bracket-left.is-on,
+  .nav-bracket-right.is-on,
+  .nav-bracket-link:hover .nav-bracket-left:not(.is-on),
+  .nav-bracket-link:hover .nav-bracket-right:not(.is-on) {
+    animation: none;
+  }
+
+  .nav-bracket-left.is-on,
+  .nav-bracket-link:hover .nav-bracket-left {
+    transform: translateX(-0.06em);
+    opacity: 1;
+  }
+
+  .nav-bracket-right.is-on,
+  .nav-bracket-link:hover .nav-bracket-right {
+    transform: translateX(0.06em);
+    opacity: 1;
+  }
+}
+
+/* Full-bleed mobile canvas: extend behind Safari bottom toolbar. */
+html {
+  height: var(--app-height);
+  min-height: var(--app-height);
+}
+
+html,
+body {
+  min-height: var(--app-height);
+}
+
+body {
+  min-height: 100lvh;
+  min-height: -webkit-fill-available;
+  min-height: var(--app-height);
+}
+
+.home-video-layer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  height: var(--app-height);
+  min-height: var(--app-height);
+  width: 100%;
+}
+
+@supports (height: 100lvh) {
+  .home-video-layer {
+    height: 100lvh;
+    min-height: 100lvh;
+  }
+}
+
+@media (min-width: 768px) {
+  .home-video-layer {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    min-height: 100%;
+    width: auto;
+  }
+}
+
+/* Safari < 15.4: lvh/dvh invalid — JS sets --app-height in px. */
+.h-dvh {
+  height: var(--app-height);
+  min-height: var(--app-height);
+}
+
+.min-h-dvh {
+  min-height: var(--app-height);
+}
+
+.h-app {
+  height: var(--app-height);
+  min-height: var(--app-height);
+}
+
+/* Footer "Cookies" riapre il pannello; nascondi il trigger rotondo Cookiebot */
+#CookiebotWidget,
+#CookiebotWidget-wrapper,
+.CookiebotWidget-logo {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#CybotCookiebotDialog.CybotCookiebotDialogActive {
+  z-index: 2147483647 !important;
+  pointer-events: auto !important;
+}
+
+/* Cookiebot — rimuovi intera sezione branding (striscia bianca + linea grigia) */
+#CybotCookiebotDialog #CybotCookiebotDialogPoweredbyLink,
+#CybotCookiebotDialog .CybotCookiebotDialogPoweredbyLink,
+#CybotCookiebotDialog #CybotCookiebotDialogPoweredByText,
+#CybotCookiebotDialog a#CybotCookiebotDialogPoweredbyCybot,
+#CybotCookiebotDialog #CybotCookiebotDialogPoweredbyCybot,
+#CybotCookiebotDialog #CybotCookiebotDialogPoweredbyImage,
+#CybotCookiebotDialog #CybotCookiebotDialogHeaderLogosWrapper,
+#CybotCookiebotDialog .CybotCookiebotDialogHeaderLogosWrapper,
+#CybotCookiebotDialog [class*="Poweredby"],
+#CybotCookiebotDialog [id*="Poweredby"],
+#CybotCookiebotDialog [class*="PoweredBy"],
+#CybotCookiebotDialog [id*="PoweredBy"] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Edge: header contiene solo il logo Cookiebot — taglia tutto il blocco e la linea sotto */
+#CybotCookiebotDialog.CybotEdge #CybotCookiebotDialogHeader,
+#CybotCookiebotDialog #CybotCookiebotDialogHeader:has(#CybotCookiebotDialogHeaderLogosWrapper):not(
+    :has(#CybotCookiebotDialogHeaderTitle)
+  ) {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Cookiebot — mobile: forza barra in basso + dimensioni compatte (non tocca layout desktop) */
+@media screen and (max-width: 767px) {
+  #CybotCookiebotDialog,
+  #CybotCookiebotDialog.CybotMultilevel,
+  #CybotCookiebotDialog.CybotEdge {
+    position: fixed !important;
+    top: auto !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 38dvh !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #CybotCookiebotDialog .CybotCookiebotDialogContentWrapper {
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)) 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  #CybotCookiebotDialog #CybotCookiebotDialogHeaderTitle {
+    margin: 0 0 4px !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+  }
+
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyContent {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+  #CybotCookiebotDialog #CybotCookiebotDialogNav .CybotCookiebotDialogNavItem {
+    font-size: 10px !important;
+    padding: 6px 0 !important;
+  }
+
+  #CybotCookiebotDialog .CybotCookiebotDialogBodyButton,
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyButtonAccept,
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyButtonDecline,
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll,
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection {
+    padding: 6px 8px !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+  }
+
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyButtonDetails,
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyEdgeMoreDetailsLink {
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyEdgeMoreDetails {
+    margin: 0 !important;
+    padding: 8px 10px 8px 0 !important;
+    box-sizing: border-box !important;
+    text-align: right !important;
+  }
+
+  #CybotCookiebotDialog .CybotCookiebotDialogBodyBottomWrapper {
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #CybotCookiebotDialog #CybotCookiebotDialogFooter .CybotCookiebotScrollArea {
+    padding: 8px 0 !important;
+  }
+
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyLevelButtonsWrapper,
+  #CybotCookiebotDialog .CybotCookiebotDialogBodyLevelButtons,
+  #CybotCookiebotDialog #CybotCookiebotDialogBodyLevelButtons {
+    gap: 4px 10px !important;
+  }
+
+  #CybotCookiebotDialog .CybotCookiebotDialogBodyLevelButtonLabel {
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+  }
+
+  #CybotCookiebotDialog .CybotCookiebotDialogBodyLevelButtonSlider {
+    width: 26px !important;
+    height: 13px !important;
+  }
+
+  #CybotCookiebotDialog .CybotCookiebotDialogBodyLevelButtonSlider::before {
+    width: 9px !important;
+    height: 9px !important;
+    bottom: 2px !important;
+  }
+
+  #CybotCookiebotDialog input:checked + .CybotCookiebotDialogBodyLevelButtonSlider::before {
+    transform: translateX(13px) !important;
+  }
+
+  #CybotCookiebotDialog [class*="Gpc"],
+  #CybotCookiebotDialog [id*="Gpc"] {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+  }
+}
+
+html.mobile-native-scroll,
+html.mobile-native-scroll body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html.mobile-native-scroll::-webkit-scrollbar,
+html.mobile-native-scroll body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+  background: transparent;
+}
