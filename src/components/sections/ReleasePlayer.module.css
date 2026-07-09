@@ -169,15 +169,7 @@
   min-width: 0;
 }
 
-.trackButton:hover:not(:disabled):not(.trackButtonInactive):not(.trackButtonActive) {
-  color: #999;
-}
-
 .trackButtonActive {
-  color: #999;
-}
-
-.trackButtonActive:hover {
   color: #999;
 }
 
@@ -187,9 +179,19 @@
   opacity: 1;
 }
 
-.trackButtonInactive:hover,
-.trackButton:disabled:hover {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .trackButton:hover:not(:disabled):not(.trackButtonInactive):not(.trackButtonActive) {
+    color: #999;
+  }
+
+  .trackButtonActive:hover {
+    color: #999;
+  }
+
+  .trackButtonInactive:hover,
+  .trackButton:disabled:hover {
+    opacity: 1;
+  }
 }
 
 .albumHeader {
