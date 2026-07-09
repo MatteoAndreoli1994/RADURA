@@ -52,11 +52,10 @@ export async function resolveBandcampCandidates(
     return uniqueCandidates([
       manual,
       directCandidate,
-      envServer,
-      envPublic,
-      // Keep release default as last chance in case it's updated later.
       defaultReleaseUrl,
       guessed,
+      envServer,
+      envPublic,
     ]);
   }
 

@@ -48,8 +48,11 @@ export const RELEASES: Release[] = [
     title: "ACQUE",
     releaseDate: "July 10, 2026",
     cover: "/releases/2026.jpg",
-    bandcampUrl: "https://radura.bandcamp.com",
-    bandcampEmbedUrl: process.env.NEXT_PUBLIC_ACQUE_BANDCAMP_EMBED,
+    bandcampUrl: "https://radura.bandcamp.com/album/acque",
+    bandcampEmbedUrl:
+      process.env.NEXT_PUBLIC_ACQUE_BANDCAMP_EMBED ??
+      "https://bandcamp.com/EmbeddedPlayer/v=2/album=2326479545/size=large/bgcol=ffffff/linkcol=000000/tracklist=true/transparent=true/",
+    bandcampArtUrl: "https://f4.bcbits.com/img/a1323132970_10.jpg",
     trackCount: 7,
     credits: {
       paragraphs: [

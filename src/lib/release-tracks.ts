@@ -12,11 +12,15 @@ export const ACQUE_TRACK_TITLES = [
 ] as const;
 
 export const STATIC_RELEASE_TRACKS: Record<string, BandcampTrack[]> = {
-  "2026": ACQUE_TRACK_TITLES.map((title, index) => ({
-    id: index + 1,
-    title,
-    duration: 0,
-  })),
+  "2026": [
+    { id: 1881933241, title: "DESIDERARE", duration: 389.586 },
+    { id: 4046158038, title: "ANGELI E LEI", duration: 294.051 },
+    { id: 1241492707, title: "TEMPESTA", duration: 383.021 },
+    { id: 3237346087, title: "INCANTO PT. I", duration: 137.482 },
+    { id: 742853743, title: "INCANTO PT. II", duration: 363.059 },
+    { id: 1657916637, title: "INCANTO PT. III", duration: 243.028 },
+    { id: 3167455875, title: "CORPOTRASFORMA", duration: 472.308 },
+  ],
   "apr-2021": [
     { id: 883835458, title: "La Luce Che Copre Gli Angoli", duration: 150.74 },
     { id: 3246558910, title: "Se Questa È La Nostra Festa", duration: 293.053 },
@@ -94,12 +98,14 @@ export function mergeReleaseTracks(
 
   const usedFetchedIndexes = new Set<number>();
 
+  const matchByIndex = fetchedTracks.length === staticTracks.length;
+
   return staticTracks.map((staticTrack, index) => {
-    let fetched = index < fetchedTracks.length ? fetchedTracks[index] : null;
-    if (fetched) {
+    let fetched = findFetchedTrackMatch(staticTrack, fetchedTracks, usedFetchedIndexes);
+
+    if (!fetched && matchByIndex && index < fetchedTracks.length) {
+      fetched = fetchedTracks[index];
       usedFetchedIndexes.add(index);
-    } else {
-      fetched = findFetchedTrackMatch(staticTrack, fetchedTracks, usedFetchedIndexes);
     }
 
     if (!fetched) return staticTrack;
