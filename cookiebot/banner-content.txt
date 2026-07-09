@@ -1,0 +1,18 @@
+<!-- Cookiebot opt-in: barra orizzontale compatta in basso via src/app/globals.css -->
+<!-- Nel manager: template Opt-in / Edge, Custom HTML/CSS vuoti -->
+
+Banner body (EN) — allineato al sito, override anche in CookiebotBannerEnhancer.tsx:
+
+We use essential cookies to run this website and remember your cookie choices. If you play music, embedded Bandcamp players may set their own cookies. We do not use advertising or social media tracking on this site.
+
+Versione IT (se serve in Cookiebot Manager):
+
+Utilizziamo cookie tecnici per far funzionare il sito e ricordare le tue preferenze sui cookie. I player Bandcamp integrati possono impostare cookie quando ascolti la musica. Non utilizziamo cookie pubblicitari o di tracciamento social su questo sito.
+
+Cosa usa davvero raduraband.com (scan Cookiebot, luglio 2026):
+- Necessary: 1 (Cookiebot — consenso cookie)
+- Preferences: 0
+- Statistics: 0
+- Marketing: 0
+- Servizi terzi nel codice: Cookiebot, Bandcamp (iframe player musica), EmailOctopus (newsletter solo server-side, no cookie browse)
+- Nessun Google Analytics, Meta Pixel, ads, embed social

@@ -1,0 +1,32 @@
+.footer {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    display: block;
+  }
+}
+
+.inner {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 20px;
+  align-items: center;
+  height: 21px;
+  width: 100%;
+}
+
+.playerCol {
+  grid-column: 3 / span 4;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.playerShell {
+  flex: 1 1 auto;
+  min-width: 0;
+}

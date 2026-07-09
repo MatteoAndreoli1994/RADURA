@@ -1,0 +1,74 @@
+.aboutFooterInFlow {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .aboutFooterInFlow {
+    display: block;
+  }
+}
+
+.aboutFooterInner {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 20px;
+  align-items: center;
+  height: 21px;
+  width: 100%;
+}
+
+.aboutPlayerCol {
+  grid-column: 1 / span 4;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.aboutLegalLinksCol {
+  grid-column: 11 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  box-sizing: border-box;
+  min-width: 0;
+  padding-right: calc(var(--site-chrome-right) - 50px);
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.aboutFooterLegalLeft .aboutLegalLinksCol {
+  grid-column: 1;
+  justify-content: flex-start;
+  justify-self: start;
+  padding-right: 0;
+}
+
+.aboutFooterLegalLeft .aboutPlayerCol {
+  grid-column: 3 / span 4;
+}
+
+.aboutLink {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: #999;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.aboutLink:hover {
+  color: #000;
+}
+
+.aboutLinkLight {
+  color: #fff;
+}
+
+.aboutLinkLight:hover {
+  color: #999;
+}

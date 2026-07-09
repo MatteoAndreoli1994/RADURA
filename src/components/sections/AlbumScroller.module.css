@@ -1,0 +1,113 @@
+.shell {
+  --album-grid-gutter: 20px;
+  --album-col-width: calc((100% - 11 * var(--album-grid-gutter)) / 12);
+  /* Grandezza fissa = 2 colonne rosse a 1280px — non si rimpicciolisce mai in flex */
+  --album-cover-size: calc(
+    ((1180px - 11 * var(--album-grid-gutter)) / 12) * 2 + var(--album-grid-gutter)
+  );
+  --album-row-inset: calc(var(--album-col-width) * 2 + var(--album-grid-gutter) * 2);
+  width: 100%;
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 1281px) {
+  .shell {
+    --album-cover-size: calc(
+      ((1180px - 11 * var(--album-grid-gutter)) / 12) * 2 * var(--desktop-scale, 1) +
+        var(--album-grid-gutter) * var(--desktop-scale, 1)
+    );
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--album-grid-gutter);
+  align-items: flex-start;
+  margin: 0;
+  padding: 0 0 0 var(--album-row-inset);
+  list-style: none;
+}
+
+.item {
+  flex: 0 0 var(--album-cover-size);
+  width: var(--album-cover-size);
+  min-width: var(--album-cover-size);
+  max-width: var(--album-cover-size);
+}
+
+.albumButton {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.albumButtonLoading {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f5f5f3;
+}
+
+.title {
+  display: block;
+  margin-top: 8px;
+  max-width: 100%;
+}
+
+/* Full screen: griglia 12 col, 5 copertine precise su 2 colonne rosse ciascuna (col 3–12) */
+@media (min-width: 1280px) {
+  .row {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--album-grid-gutter);
+    row-gap: var(--album-grid-gutter);
+    padding-left: 0;
+  }
+
+  .item {
+    grid-column: span 2;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    flex: none;
+  }
+
+  .item:nth-child(5n + 1) {
+    grid-column: 3 / span 2;
+  }
+}
+
+/* Sotto 1280px: flex wrap, stessa grandezza fissa, a capo senza rimpicciolire */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: var(--album-row-inset);
+  }
+
+  .item {
+    flex: 0 0 var(--album-cover-size);
+    width: var(--album-cover-size);
+    min-width: var(--album-cover-size);
+    max-width: var(--album-cover-size);
+    grid-column: auto;
+  }
+
+  .item:nth-child(5n + 1) {
+    grid-column: auto;
+  }
+}

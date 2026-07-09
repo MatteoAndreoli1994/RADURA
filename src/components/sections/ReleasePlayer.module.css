@@ -1,0 +1,443 @@
+.section {
+  --release-top-desktop: 0;
+  /* Altezza del blocco immagine (cover + titolo) della griglia Music,
+     usata per allineare la partenza della pagina album al nuovo layout. */
+  --release-align-offset: 200px;
+}
+
+.mobileLayout {
+  display: block;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.desktopLayout {
+  display: none;
+}
+
+.coverFrame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  line-height: 0;
+  background: #f5f5f3;
+}
+
+.coverImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.metaBlock {
+  width: 100%;
+}
+
+.metaLabel {
+  margin: 0;
+  font-size: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.releasedHeaderRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.releasedInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.releasedHeaderRow .metaLabel {
+  flex: none;
+  min-width: 0;
+}
+
+.releasedDate {
+  margin: 0;
+  font-size: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #000;
+}
+
+.inlineShare {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  height: 19px;
+  margin: 0;
+  padding: 0 9px;
+  border: 1px solid #000;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: inherit;
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 200ms ease;
+}
+
+.inlineShare:hover {
+  opacity: 0.55;
+}
+
+.tracklistBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.tracklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  font-size: inherit;
+}
+
+.trackItem {
+  margin: 0;
+  padding: 0;
+}
+
+.trackItem + .trackItem {
+  margin-top: 0;
+}
+
+.trackButton {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35em;
+  width: 100%;
+  min-height: calc(1.25 * 1em);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: inherit;
+  line-height: 1.25;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #000;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.trackIndex,
+.trackTitle {
+  line-height: inherit;
+}
+
+.trackIndex {
+  flex: 0 0 auto;
+}
+
+.trackTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.trackButton:hover:not(:disabled):not(.trackButtonInactive):not(.trackButtonActive) {
+  color: #999;
+}
+
+.trackButtonActive {
+  color: #999;
+}
+
+.trackButtonActive:hover {
+  color: #999;
+}
+
+.trackButtonInactive,
+.trackButton:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.trackButtonInactive:hover,
+.trackButton:disabled:hover {
+  opacity: 1;
+}
+
+.albumHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.albumTitle {
+  margin: 0;
+  font-size: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: #000;
+}
+
+.acquePage .albumTitle,
+.acquePage .trackTitle {
+  text-transform: uppercase;
+}
+
+.artistName {
+  margin: 0;
+  font-size: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #999;
+}
+
+.artistLink {
+  font: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 200ms ease;
+}
+
+.artistLink:hover {
+  opacity: 0.55;
+}
+
+.credits {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.15em 0 0;
+  font-size: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #000;
+}
+
+.credits p {
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+  white-space: pre-line;
+}
+
+.creditsEffetto,
+.creditsEffetto p {
+  line-height: 12.5px;
+}
+
+.mobilePlayerSpacer {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobileReleaseShell {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-top: var(--mobile-music-list-extra-gap, 1.25rem);
+  }
+
+  .mobileAlbumHeaderRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mobileAlbumHeaderRow .albumHeader {
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 4px;
+  }
+
+  .mobileAlbumHeaderRow .albumTitle,
+  .mobileAlbumHeaderRow .artistName {
+    font-size: 14px;
+  }
+
+  .mobileLayout .metaBlock {
+    margin-top: 0;
+  }
+
+  .mobileLayout .releasedInfo {
+    gap: 4px;
+  }
+
+  .mobileLayout .tracklistBlock {
+    margin-top: 0;
+    gap: 4px;
+  }
+
+  .mobileLayout .creditsMobile {
+    margin-top: 1.5rem;
+    gap: 4px;
+    font-size: 12px;
+    line-height: 1.15;
+  }
+
+  .mobileLayout .creditsMobile p {
+    margin: 0;
+    white-space: pre-line;
+    text-wrap: pretty;
+  }
+
+  .mobileLayout .creditsMobile.creditsEffetto p {
+    line-height: 12.5px;
+  }
+
+  .mobileLayout .inlineShare {
+    height: 24px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .mobilePlayerSpacer {
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    /* The spacer is a sibling of .mobileReleaseShell inside .mobileLayout, which is
+       display:block (no flex gap between them). Reserve exactly the player height so
+       the last content line sits flush above the player without being covered. */
+    margin-top: 0;
+    /* Reserve the (taller, two-row) player height plus a little breathing room so
+       the last content line isn't flush against / covered by the fixed player. */
+    padding-bottom: calc(
+      var(
+          --site-music-player-height,
+          calc(
+            var(--mobile-site-player-content-height, 3.625rem) + env(safe-area-inset-bottom, 0px)
+          )
+        ) + var(--mobile-player-footer-gap, 0.75rem)
+    );
+  }
+}
+
+@media (min-width: 768px) {
+  .mobileLayout {
+    display: none;
+  }
+
+  .desktopLayout {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 20px;
+    width: 100%;
+    padding-top: max(
+      0px,
+      calc(
+        var(--app-height, 100dvh) / 2 - var(--release-align-offset) -
+          var(--about-content-start, 0px)
+      )
+    );
+    padding-bottom: 0;
+    align-items: start;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .leftCol {
+    grid-column: 3 / span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .metaBlock {
+    margin-top: 24px;
+  }
+
+  .tracklistBlock {
+    margin-top: 16px;
+  }
+
+  .coverFrame + .tracklistBlock {
+    margin-top: 24px;
+  }
+
+  .rightCol {
+    grid-column: 6 / 11;
+    min-width: 0;
+    padding-top: 10px;
+  }
+
+  .rightCol .credits {
+    gap: 4px;
+  }
+
+  @media (max-width: 1280px) {
+    .rightCol {
+      grid-column: 6 / -1;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .rightCol {
+      grid-column: 7 / -1;
+    }
+
+    .leftCol {
+      grid-column: 3 / span 3;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .rightCol {
+      grid-column: 7 / -1;
+    }
+  }
+
+  @media (min-width: 1281px) {
+    .desktopLayout {
+      padding-top: max(
+        0px,
+        calc(
+          var(--app-height) / var(--desktop-scale) / 2 - var(--release-align-offset) -
+            var(--about-content-start, 0px)
+        )
+      );
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "dates": [
+    {
+      "id": "p1",
+      "date": "18.12.2025",
+      "code": "OE0026",
+      "lineup": "1LDK, Dove, Kenji, sudden star, Virginia Waters",
+      "city": "Tokyo",
+      "venue": "SPREAD",
+      "link": "",
+      "status": "past"
+    },
+    {
+      "id": "p2",
+      "date": "09.07.2025",
+      "code": "OE0027",
+      "lineup": "Florida Lines, Holy Tongue, Orange County, Radura, Yot",
+      "city": "Milano",
+      "venue": "OFF",
+      "link": "",
+      "status": "past"
+    },
+    {
+      "id": "p3",
+      "date": "29.03.2025",
+      "code": "OE0028",
+      "lineup": "Radura",
+      "city": "Milano",
+      "venue": "Magazzini Generali",
+      "link": "",
+      "status": "past"
+    },
+    {
+      "id": "p4",
+      "date": "22.03.2025",
+      "code": "OE0029",
+      "lineup": "Krikey Red, Radura",
+      "city": "Sanremo",
+      "venue": "Sanremo's Calling the Reaper 2025",
+      "link": "",
+      "status": "past"
+    },
+    {
+      "id": "p5",
+      "date": "16.03.2025",
+      "code": "OE0030",
+      "lineup": "Damp Stones, Enemy Inside, Paranoid Rolex, Radura, Saira's Luck",
+      "city": "Milano",
+      "venue": "Off Rock Cafè",
+      "link": "",
+      "status": "past"
+    },
+    {
+      "id": "p6",
+      "date": "15.02.2025",
+      "code": "OE0031",
+      "lineup": "Gourdie Howe, Jail Skatepunk, Radura, SE.WS, Slurp, Tefnut",
+      "city": "Rozzano (MI)",
+      "venue": "Mazzena Social Centre",
+      "link": "",
+      "status": "past"
+    },
+    {
+      "id": "p7",
+      "date": "24.01.2025",
+      "code": "OE0032",
+      "lineup": "Ähnlich, Radura",
+      "city": "Saronno (VA)",
+      "venue": "25 Decibel",
+      "link": "",
+      "status": "past"
+    },
+    {
+      "id": "p8",
+      "date": "18.01.2025",
+      "code": "OE0033",
+      "lineup": "BAAB, Radura",
+      "city": "Milano",
+      "venue": "Eldiamante",
+      "link": "",
+      "status": "past"
+    },
+    {
+      "id": "1",
+      "date": "02.07.2026",
+      "city": "Inzago (MI)",
+      "venue": "Festa della Magnolia",
+      "link": "",
+      "flyer": "/api/live-flyers/1",
+      "status": "upcoming"
+    },
+    {
+      "id": "2",
+      "date": "18.07.2026",
+      "city": "Pordenone",
+      "venue": "Selva Fest",
+      "link": "",
+      "flyer": "/api/live-flyers/2",
+      "status": "upcoming"
+    },
+    {
+      "id": "3",
+      "date": "25.07.2026",
+      "city": "Umbertide (PG)",
+      "venue": "Italian Party",
+      "link": "",
+      "flyer": "/api/live-flyers/3",
+      "status": "upcoming"
+    },
+    {
+      "id": "4",
+      "date": "21.08.2026",
+      "city": "Sondrio",
+      "venue": "Perestrojka",
+      "link": "",
+      "flyer": "/api/live-flyers/4",
+      "status": "upcoming"
+    },
+    {
+      "id": "5",
+      "date": "18.09.2026",
+      "city": "Milano",
+      "venue": "Spazio Teatro 89",
+      "link": "",
+      "flyer": "/api/live-flyers/5",
+      "status": "upcoming"
+    },
+    {
+      "id": "6",
+      "date": "09.10.2026",
+      "city": "Torino",
+      "venue": "Blah Blah",
+      "link": "",
+      "flyer": "/api/live-flyers/6",
+      "status": "upcoming"
+    },
+    {
+      "id": "7",
+      "date": "10.10.2026",
+      "city": "Mantova",
+      "venue": "Paura Padana",
+      "link": "",
+      "flyer": "/api/live-flyers/7",
+      "status": "upcoming"
+    },
+    {
+      "id": "8",
+      "date": "21.11.2026",
+      "city": "Siena",
+      "venue": "Corte dei Miracoli",
+      "link": "",
+      "flyer": "/api/live-flyers/8",
+      "status": "upcoming"
+    }
+  ]
+}

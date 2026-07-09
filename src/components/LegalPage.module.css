@@ -1,0 +1,276 @@
+.page {
+  --legal-text-size: 10px;
+  --legal-line-height: 1.45;
+  /* Desktop top offset was 1.15em at 11px; keep the same px value at 10px */
+  --legal-content-em-offset: 1.15em;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: var(--legal-text-size);
+  line-height: var(--legal-line-height);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 768px) {
+  .page {
+    --legal-line-height: 1.15;
+    --legal-content-em-offset: 12.65px;
+    --legal-section-gap: 30.8px;
+  }
+}
+
+.content {
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px));
+}
+
+.grid {
+  width: 100%;
+}
+
+.labelCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-width: 0;
+}
+
+.langCol {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 12px;
+  pointer-events: none;
+}
+
+.langCol .langToggle {
+  pointer-events: auto;
+}
+
+.released {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2.8em;
+}
+
+.releasedLabel,
+.releasedDate {
+  margin: 0;
+  font: inherit;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.releasedLabel {
+  color: #999;
+  text-transform: uppercase;
+}
+
+.releasedDate {
+  color: #000;
+}
+
+.contentCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8em;
+  width: 100%;
+  min-width: 0;
+  margin-top: 32px;
+}
+
+@media (max-width: 767px) {
+  .page {
+    --legal-text-size: 12px;
+  }
+
+  .content {
+    padding-top: 3rem;
+  }
+
+  /* Put the LEGAL/Last updated block and the EN/IT toggle on the same row, with
+     "Last updated" baseline-aligned to EN/IT. */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 12px;
+    align-items: end;
+    margin-top: 0;
+  }
+
+  .labelCol {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .langCol {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    margin-top: 0;
+  }
+
+  .contentCol {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .released {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+}
+
+@media (min-width: 768px) {
+  .content {
+    padding-bottom: 0;
+  }
+
+  .grid {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 20px;
+    align-items: start;
+  }
+
+  .labelCol {
+    grid-column: 4 / span 2;
+    grid-row: 1;
+    align-self: start;
+    margin-top: var(--legal-content-drop, 4vh);
+  }
+
+  .contentCol {
+    grid-column: 6 / span 4;
+    grid-row: 1;
+    gap: var(--legal-section-gap, 2.8em);
+    margin-top: calc(var(--legal-content-drop, 4vh) + var(--legal-content-em-offset, 1.15em) + 2px);
+    align-self: start;
+  }
+
+  .langCol {
+    grid-column: 6 / span 4;
+    grid-row: 1;
+    justify-content: flex-end;
+    align-self: start;
+    margin-top: calc(var(--legal-content-drop, 4vh) + var(--legal-content-em-offset, 1.15em) + 2px);
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .released {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    align-self: end;
+    margin-top: 0;
+    padding-bottom: calc(
+      var(--site-player-bar-height, 28px) + var(--site-chrome-bottom, 24px) + 21px +
+        env(safe-area-inset-bottom, 0px) + 8px
+    );
+  }
+}
+
+.title {
+  margin: 0;
+  color: #000;
+  font: inherit;
+  font-size: 1em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.updated {
+  margin: 0;
+  color: #999;
+  font: inherit;
+  font-size: 0.93em;
+  line-height: var(--legal-line-height);
+  letter-spacing: -0.01em;
+}
+
+.langToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.langButton {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #999;
+  font: inherit;
+  font-size: 0.93em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.langButton:hover {
+  color: #000;
+}
+
+.langButtonActive,
+.langButtonActive:hover {
+  color: #000;
+}
+
+.section {
+  scroll-margin-top: 1.5rem;
+  min-width: 0;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #000;
+  font: inherit;
+  font-size: 0.93em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: calc(var(--legal-line-height) * 1em) 0 0;
+  color: #000;
+  font: inherit;
+  font-size: inherit;
+  line-height: var(--legal-line-height);
+  letter-spacing: -0.01em;
+}
+
+.sectionBody p {
+  margin: 0;
+}
+
+.cookieDeclaration {
+  margin-top: 4px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.cookiePlaceholder {
+  margin: 0;
+  color: #999;
+}
+
+@media (min-width: 768px) {
+  .cookieDeclaration :global(*) {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 10px !important;
+    line-height: 1.45 !important;
+  }
+}

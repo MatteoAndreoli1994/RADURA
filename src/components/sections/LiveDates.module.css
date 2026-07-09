@@ -1,0 +1,407 @@
+.shell {
+  display: flex;
+  min-height: 0;
+  width: 100%;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  margin: 0 0 12px;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    position: relative;
+    min-width: 0;
+  }
+
+  .tabs {
+    grid-column: 1 / -1;
+    position: absolute;
+    top: 0;
+    left: var(--live-table-offset);
+    right: 0;
+    margin: 0;
+    transform: translateY(calc(-100% - 12px));
+  }
+
+  .list,
+  .empty {
+    grid-column: 1 / -1;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+.tab {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #999;
+  font: inherit;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.tab:hover {
+  color: #000;
+}
+
+.tabActive {
+  color: #000;
+}
+
+.viewToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 auto 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #999;
+  font: inherit;
+  line-height: 1;
+  width: auto;
+  min-width: 2.25em;
+  height: 2.25em;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.viewToggle:hover {
+  color: #000;
+}
+
+.viewToggleGlyph {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  height: 100%;
+  font-size: 2.25em;
+  line-height: 1;
+  text-align: left;
+}
+
+.viewToggleList .viewToggleGlyph {
+  transform: translateX(-0.15em);
+}
+
+.viewToggleFlyers .viewToggleGlyph {
+  transform: translateX(-0.12em);
+}
+
+.flyerGrid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.flyerGrid::-webkit-scrollbar {
+  display: none;
+}
+
+.flyerTooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 320px;
+  padding: 6px 8px;
+  background: var(--background, #fdfcfa);
+  border: 1px solid #000;
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.flyerTooltipVenue {
+  color: #666;
+}
+
+.flyerGridItem {
+  flex: 0 0 auto;
+  width: min(34vw, 200px);
+  min-width: 0;
+}
+
+.flyerGridItem a {
+  display: block;
+}
+
+.flyerGridImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.list {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  border-top: 1px solid #000;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  column-gap: 20px;
+  align-items: center;
+  width: 100%;
+  min-height: 22px;
+  padding: 4px 0;
+  border-bottom: 1px solid #000;
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.rowWithFlyer {
+  cursor: pointer;
+}
+
+.rowMain {
+  display: contents;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .row:hover {
+    color: #999;
+  }
+
+  .row:hover .link img {
+    filter: brightness(0) saturate(100%) invert(60%);
+  }
+}
+
+.dateCell {
+  grid-column: 1;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.codeCell {
+  grid-column: 2;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.cityCell {
+  grid-column: 3;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.venueCell {
+  grid-column: 5;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.lineupCell {
+  grid-column: 7 / 10;
+  min-width: 0;
+}
+
+.linkCell {
+  grid-column: 10;
+  justify-self: end;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+  color: inherit;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.link img {
+  transition: filter 200ms ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: #999;
+}
+
+.link:hover img,
+.link:focus-visible img {
+  filter: brightness(0) saturate(100%) invert(60%);
+}
+
+.empty {
+  margin: 0;
+  padding: 12px 0;
+  color: #999;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    --live-table-offset: calc((100% - 8 * var(--live-grid-gutter, 20px)) / 9);
+  }
+
+  .shell .list,
+  .shell .empty,
+  .shell .flyerGrid {
+    margin-left: var(--live-table-offset);
+    width: calc(100% - var(--live-table-offset));
+    max-width: none;
+  }
+
+  .shell .flyerGrid {
+    grid-column: 1 / -1;
+  }
+
+  .flyerGridItem {
+    width: clamp(140px, 12vw, 180px);
+  }
+}
+
+@media (max-width: 767px) {
+  .shell {
+    margin-top: calc(var(--mobile-music-list-extra-gap, 1.25rem) + 0.5rem);
+  }
+
+  .flyerGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 0;
+  }
+
+  .flyerGridItem {
+    width: 100%;
+  }
+
+  .tabs {
+    justify-content: flex-start;
+    margin-bottom: 0.75rem;
+  }
+
+  .tab {
+    font-size: 12px;
+    line-height: 1.15;
+  }
+
+  .viewToggle {
+    font-size: 12px;
+    line-height: 1;
+    width: auto;
+    min-width: 36px;
+    height: 36px;
+  }
+
+  .viewToggleGlyph {
+    font-size: 28px;
+  }
+
+  .viewToggleList .viewToggleGlyph {
+    transform: translateX(-4px);
+  }
+
+  .viewToggleFlyers .viewToggleGlyph {
+    transform: translateX(-3px);
+  }
+
+  .list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .row {
+    column-gap: 8px;
+    padding: 8px 0;
+    min-height: 0;
+  }
+
+  .rowMain {
+    display: contents;
+  }
+
+  .dateCell,
+  .codeCell,
+  .cityCell,
+  .venueCell {
+    white-space: nowrap;
+  }
+
+  .venueCell {
+    grid-column: 6;
+    padding-left: calc(50% + 4px);
+  }
+
+  .lineupCell {
+    grid-column: 7 / 9;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .linkCell {
+    grid-column: 9 / 11;
+    justify-self: end;
+    align-self: center;
+    min-width: max-content;
+    overflow: visible;
+    white-space: nowrap;
+  }
+
+  .link {
+    flex-shrink: 0;
+  }
+
+  .link img {
+    display: block;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+
+  .lineupCell:empty,
+  .linkCell:empty {
+    display: none;
+  }
+}
