@@ -162,6 +162,13 @@
   object-fit: contain;
 }
 
+.flyerGridPlaceholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background: #ebe8e2;
+}
+
 .list {
   box-sizing: border-box;
   margin: 0;

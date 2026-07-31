@@ -6,7 +6,13 @@ import { useEffect, useState } from "react";
 const CURSOR_GAP = 16;
 const MAX_WIDTH_PX = 340;
 
-const preloadedFlyers = new Set<string>();
+export type LiveFlyerMeta = {
+  width: number;
+  height: number;
+};
+
+const preloadedFlyers = new Map<string, LiveFlyerMeta>();
+const pendingFlyers = new Map<string, Promise<LiveFlyerMeta | null>>();
 
 export function resolveLiveFlyerSrc(src: string) {
   if (typeof window === "undefined" || src.startsWith("http")) return src;
@@ -17,21 +23,42 @@ function resolveFlyerSrc(src: string) {
   return resolveLiveFlyerSrc(src);
 }
 
-export function preloadLiveFlyer(src: string) {
-  const resolved = resolveFlyerSrc(src);
-  if (preloadedFlyers.has(resolved)) {
-    return Promise.resolve();
-  }
+export function getLiveFlyerMeta(src: string): LiveFlyerMeta | null {
+  return preloadedFlyers.get(resolveFlyerSrc(src)) ?? null;
+}
 
-  return new Promise<void>((resolve) => {
+export function isLiveFlyerPreloaded(src: string) {
+  return preloadedFlyers.has(resolveFlyerSrc(src));
+}
+
+export function preloadLiveFlyer(src: string): Promise<LiveFlyerMeta | null> {
+  const resolved = resolveFlyerSrc(src);
+  const existing = preloadedFlyers.get(resolved);
+  if (existing) return Promise.resolve(existing);
+
+  const pending = pendingFlyers.get(resolved);
+  if (pending) return pending;
+
+  const request = new Promise<LiveFlyerMeta | null>((resolve) => {
     const img = new Image();
     img.onload = () => {
-      preloadedFlyers.add(resolved);
-      resolve();
+      const meta: LiveFlyerMeta = {
+        width: img.naturalWidth || 2,
+        height: img.naturalHeight || 3,
+      };
+      preloadedFlyers.set(resolved, meta);
+      pendingFlyers.delete(resolved);
+      resolve(meta);
     };
-    img.onerror = () => resolve();
+    img.onerror = () => {
+      pendingFlyers.delete(resolved);
+      resolve(null);
+    };
     img.src = resolved;
   });
+
+  pendingFlyers.set(resolved, request);
+  return request;
 }
 
 type LiveFlyerCursorPreviewProps = {

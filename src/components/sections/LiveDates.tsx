@@ -3,7 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { ExternalLinkIcon } from "@/components/ArrowIcon";
-import { resolveLiveFlyerSrc } from "@/components/LiveFlyerCursorPreview";
+import {
+  getLiveFlyerMeta,
+  preloadLiveFlyer,
+  resolveLiveFlyerSrc,
+  type LiveFlyerMeta,
+} from "@/components/LiveFlyerCursorPreview";
 import {
   formatLiveDateDisplay,
   formatLiveDateLineup,
@@ -147,6 +152,9 @@ export function LiveDates({ dates }: LiveDatesProps) {
     x: number;
     y: number;
   } | null>(null);
+  const [loadedFlyers, setLoadedFlyers] = useState<
+    Record<string, LiveFlyerMeta>
+  >({});
 
   const groupedDates = useMemo(() => {
     const upcoming = sortLiveDatesByStatus(
@@ -168,6 +176,46 @@ export function LiveDates({ dates }: LiveDatesProps) {
     () => visibleDates.filter((show) => Boolean(show.flyer?.trim())),
     [visibleDates],
   );
+
+  const allFlyerSrcs = useMemo(() => {
+    const srcs: string[] = [];
+    for (const show of dates) {
+      const flyer = show.flyer?.trim();
+      if (!flyer) continue;
+      const src = resolveLiveFlyerSrc(flyer);
+      if (!srcs.includes(src)) srcs.push(src);
+    }
+    return srcs;
+  }, [dates]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    setLoadedFlyers((current) => {
+      let next = current;
+      for (const src of allFlyerSrcs) {
+        const meta = getLiveFlyerMeta(src);
+        if (!meta || next[src]) continue;
+        if (next === current) next = { ...current };
+        next[src] = meta;
+      }
+      return next;
+    });
+
+    for (const src of allFlyerSrcs) {
+      void preloadLiveFlyer(src).then((meta) => {
+        if (cancelled || !meta) return;
+        setLoadedFlyers((current) => {
+          if (current[src]) return current;
+          return { ...current, [src]: meta };
+        });
+      });
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [allFlyerSrcs]);
 
   const showingFlyers = viewMode === "flyers";
 
@@ -211,14 +259,22 @@ export function LiveDates({ dates }: LiveDatesProps) {
               if (!flyer) return null;
               const src = resolveLiveFlyerSrc(flyer);
               const link = show.link.trim();
-              const image = (
+              const meta = loadedFlyers[src];
+              const image = meta ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={src}
                   alt={flyerAlt(show)}
                   className={styles.flyerGridImage}
                   draggable={false}
-                  loading="lazy"
+                  loading="eager"
+                  decoding="async"
+                />
+              ) : (
+                <span
+                  className={styles.flyerGridPlaceholder}
+                  aria-label={flyerAlt(show)}
+                  role="img"
                 />
               );
 
