@@ -14,6 +14,8 @@ const BANNER_TEXT =
   "We use essential cookies to run this website and remember your cookie choices. If you play music, embedded Bandcamp players may set their own cookies. We do not use advertising or social media tracking on this site.";
 const BACK_BTN_CLASS = "radura-cookie-back-btn";
 const SETTINGS_VIEW_CLASS = "radura-cookie-settings-view";
+const BANNER_OPEN_CLASS = "radura-cookie-banner-open";
+const BANNER_HEIGHT_VAR = "--radura-cookie-banner-height";
 
 function hideElement(el: HTMLElement) {
   el.style.setProperty("display", "none", "important");
@@ -154,13 +156,45 @@ function applyBannerCopy() {
   }
 }
 
+function isDialogOpen(dialog: HTMLElement) {
+  if (!dialog.classList.contains("CybotCookiebotDialogActive")) return false;
+  if (dialog.getAttribute("aria-hidden") === "true") return false;
+
+  const style = window.getComputedStyle(dialog);
+  if (style.display === "none" || style.visibility === "hidden") return false;
+  if (Number.parseFloat(style.opacity || "1") === 0) return false;
+
+  const rect = dialog.getBoundingClientRect();
+  return rect.height > 8 && rect.width > 8;
+}
+
+function syncBannerOpenState(dialog: HTMLElement | null) {
+  const open = dialog instanceof HTMLElement ? isDialogOpen(dialog) : false;
+  document.documentElement.classList.toggle(BANNER_OPEN_CLASS, open);
+
+  if (!open || !(dialog instanceof HTMLElement)) {
+    document.documentElement.style.removeProperty(BANNER_HEIGHT_VAR);
+    return;
+  }
+
+  const height = Math.ceil(dialog.getBoundingClientRect().height);
+  document.documentElement.style.setProperty(
+    BANNER_HEIGHT_VAR,
+    `${Math.max(height, 48)}px`,
+  );
+}
+
 function enhanceCookieBanner() {
   const dialog = document.getElementById("CybotCookiebotDialog");
-  if (!dialog) return false;
+  if (!dialog) {
+    syncBannerOpenState(null);
+    return false;
+  }
 
   applyBannerCopy();
   hideDoNotSellElements(dialog);
   applyViewState(dialog);
+  syncBannerOpenState(dialog);
   return true;
 }
 
@@ -193,11 +227,15 @@ export function CookiebotBannerEnhancer() {
       if (pollTimer !== null) return;
       pollTimer = window.setInterval(() => {
         const dialog = document.getElementById("CybotCookiebotDialog");
-        if (!(dialog instanceof HTMLElement) || !dialog.classList.contains("CybotCookiebotDialogActive")) {
+        if (!(dialog instanceof HTMLElement)) {
+          syncBannerOpenState(null);
           stopPolling();
           return;
         }
         enhanceCookieBanner();
+        if (!dialog.classList.contains("CybotCookiebotDialogActive")) {
+          stopPolling();
+        }
       }, 400);
     };
 
@@ -227,8 +265,14 @@ export function CookiebotBannerEnhancer() {
     scheduleEnhanceSoon();
 
     const onCookiebotReady = () => scheduleEnhanceSoon();
+    const onCookiebotHide = () => {
+      syncBannerOpenState(document.getElementById("CybotCookiebotDialog"));
+    };
     window.addEventListener("CookiebotOnLoad", onCookiebotReady);
     window.addEventListener("CookiebotOnDialogDisplay", onCookiebotReady);
+    window.addEventListener("CookiebotOnAccept", onCookiebotHide);
+    window.addEventListener("CookiebotOnDecline", onCookiebotHide);
+    window.addEventListener("CookiebotOnDialogHidden", onCookiebotHide);
 
     const onDialogClick = (event: Event) => {
       const target = event.target;
@@ -265,7 +309,12 @@ export function CookiebotBannerEnhancer() {
       for (const timer of delayedTimers) window.clearTimeout(timer);
       window.removeEventListener("CookiebotOnLoad", onCookiebotReady);
       window.removeEventListener("CookiebotOnDialogDisplay", onCookiebotReady);
+      window.removeEventListener("CookiebotOnAccept", onCookiebotHide);
+      window.removeEventListener("CookiebotOnDecline", onCookiebotHide);
+      window.removeEventListener("CookiebotOnDialogHidden", onCookiebotHide);
       document.removeEventListener("click", onDialogClick, true);
+      document.documentElement.classList.remove(BANNER_OPEN_CLASS);
+      document.documentElement.style.removeProperty(BANNER_HEIGHT_VAR);
     };
   }, []);
 

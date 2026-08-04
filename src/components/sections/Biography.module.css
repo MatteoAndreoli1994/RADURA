@@ -278,6 +278,23 @@ a.infoText:hover {
     flex-shrink: 0;
   }
 
+  /* Keep newsletter above the fixed cookie bar on shorter desktop viewports */
+  :global(html.radura-cookie-banner-open) .desktopImageFrame {
+    aspect-ratio: auto;
+    max-height: calc(
+      100dvh - var(--about-content-start, 120px) -
+        var(--radura-cookie-banner-height, 72px) - 220px
+    );
+  }
+
+  :global(html.radura-cookie-banner-open) .desktopLeftCol {
+    gap: 20px;
+  }
+
+  :global(html.radura-cookie-banner-open) .infoBlockNewsletter {
+    margin-top: 20px;
+  }
+
   .desktopImage {
     display: block;
     width: 100%;
