@@ -1479,8 +1479,24 @@ body {
   overflow: hidden !important;
 }
 
+/*
+  Safe default: never capture clicks unless the enhancer confirmed the banner
+  is actually visible/usable (html.radura-cookie-banner-open).
+  Prevents invisible/partially-blocked Cookiebot shells from trapping clicks.
+*/
 #CybotCookiebotDialog.CybotCookiebotDialogActive .CybotCookiebotDialogContentWrapper {
+  pointer-events: none !important;
+}
+
+html.radura-cookie-banner-open
+  #CybotCookiebotDialog.CybotCookiebotDialogActive:not(.radura-cookie-banner-inert)
+  .CybotCookiebotDialogContentWrapper {
   pointer-events: auto !important;
+}
+
+#CybotCookiebotDialog.radura-cookie-banner-inert,
+#CybotCookiebotDialog.radura-cookie-banner-inert * {
+  pointer-events: none !important;
 }
 
 /* Keep page content clear of the fixed cookie bar while consent is pending */

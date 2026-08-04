@@ -15,7 +15,11 @@ const BANNER_TEXT =
 const BACK_BTN_CLASS = "radura-cookie-back-btn";
 const SETTINGS_VIEW_CLASS = "radura-cookie-settings-view";
 const BANNER_OPEN_CLASS = "radura-cookie-banner-open";
+const BANNER_INERT_CLASS = "radura-cookie-banner-inert";
 const BANNER_HEIGHT_VAR = "--radura-cookie-banner-height";
+
+/** If Cookiebot stays "active" but never paints usable UI, keep disarming. */
+const VISIBILITY_POLL_MS = 250;
 
 function hideElement(el: HTMLElement) {
   el.style.setProperty("display", "none", "important");
@@ -156,32 +160,128 @@ function applyBannerCopy() {
   }
 }
 
-function isDialogOpen(dialog: HTMLElement) {
-  if (!dialog.classList.contains("CybotCookiebotDialogActive")) return false;
-  if (dialog.getAttribute("aria-hidden") === "true") return false;
-
-  const style = window.getComputedStyle(dialog);
+function isElementVisiblyPainted(el: HTMLElement) {
+  const style = window.getComputedStyle(el);
   if (style.display === "none" || style.visibility === "hidden") return false;
   if (Number.parseFloat(style.opacity || "1") === 0) return false;
 
-  const rect = dialog.getBoundingClientRect();
-  return rect.height > 8 && rect.width > 8;
+  const rect = el.getBoundingClientRect();
+  if (rect.width < 4 || rect.height < 4) return false;
+  if (rect.bottom <= 0 || rect.top >= window.innerHeight) return false;
+  if (rect.right <= 0 || rect.left >= window.innerWidth) return false;
+  return true;
+}
+
+function getPrimaryActionButtons() {
+  return [
+    document.getElementById("CybotCookiebotDialogBodyButtonAccept"),
+    document.getElementById("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"),
+    document.getElementById("CybotCookiebotDialogBodyLevelButtonCustomize"),
+    document.getElementById("CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection"),
+  ].filter((el): el is HTMLElement => el instanceof HTMLElement);
+}
+
+/**
+ * Banner is considered usable only when a user can actually see an action.
+ * Empty/partially-blocked Cookiebot shells must not capture clicks.
+ */
+function isBannerVisiblyUsable(dialog: HTMLElement) {
+  if (!dialog.classList.contains("CybotCookiebotDialogActive")) return false;
+  if (dialog.getAttribute("aria-hidden") === "true") return false;
+  if (!isElementVisiblyPainted(dialog)) return false;
+
+  const hasVisibleAction = getPrimaryActionButtons().some(isElementVisiblyPainted);
+  if (!hasVisibleAction) return false;
+
+  if (isSettingsView()) return true;
+
+  const text = document.getElementById("CybotCookiebotDialogBodyContentText");
+  const title = document.getElementById("CybotCookiebotDialogBodyContentTitle");
+  const hasVisibleCopy =
+    (text instanceof HTMLElement &&
+      isElementVisiblyPainted(text) &&
+      (text.textContent?.trim().length ?? 0) > 0) ||
+    (title instanceof HTMLElement &&
+      isElementVisiblyPainted(title) &&
+      (title.textContent?.trim().length ?? 0) > 0);
+
+  return hasVisibleCopy;
+}
+
+function disarmInvisibleOverlays() {
+  const underlay = document.getElementById("CybotCookiebotDialogBodyUnderlay");
+  if (underlay instanceof HTMLElement) {
+    underlay.style.setProperty("display", "none", "important");
+    underlay.style.setProperty("visibility", "hidden", "important");
+    underlay.style.setProperty("pointer-events", "none", "important");
+  }
+
+  document
+    .querySelectorAll<HTMLElement>(
+      "#CookiebotOverlay, .CybotCookiebotDialogBodyUnderlay, [id*='Cookiebot'][class*='Overlay']",
+    )
+    .forEach((el) => {
+      el.style.setProperty("pointer-events", "none", "important");
+    });
+}
+
+function disarmInvisibleBanner(dialog: HTMLElement) {
+  dialog.classList.add(BANNER_INERT_CLASS);
+  dialog.style.setProperty("pointer-events", "none", "important");
+
+  const wrapper = dialog.querySelector(".CybotCookiebotDialogContentWrapper");
+  if (wrapper instanceof HTMLElement) {
+    wrapper.style.setProperty("pointer-events", "none", "important");
+  }
+
+  disarmInvisibleOverlays();
+  document.documentElement.classList.remove(BANNER_OPEN_CLASS);
+  document.documentElement.style.removeProperty(BANNER_HEIGHT_VAR);
+}
+
+function armVisibleBanner(dialog: HTMLElement) {
+  dialog.classList.remove(BANNER_INERT_CLASS);
+  dialog.style.removeProperty("pointer-events");
+
+  const wrapper = dialog.querySelector(".CybotCookiebotDialogContentWrapper");
+  if (wrapper instanceof HTMLElement) {
+    wrapper.style.removeProperty("pointer-events");
+  }
 }
 
 function syncBannerOpenState(dialog: HTMLElement | null) {
-  const open = dialog instanceof HTMLElement ? isDialogOpen(dialog) : false;
-  document.documentElement.classList.toggle(BANNER_OPEN_CLASS, open);
+  disarmInvisibleOverlays();
 
-  if (!open || !(dialog instanceof HTMLElement)) {
+  if (!(dialog instanceof HTMLElement)) {
+    document.documentElement.classList.remove(BANNER_OPEN_CLASS);
     document.documentElement.style.removeProperty(BANNER_HEIGHT_VAR);
-    return;
+    return { open: false, usable: false };
   }
 
-  const height = Math.ceil(dialog.getBoundingClientRect().height);
-  document.documentElement.style.setProperty(
-    BANNER_HEIGHT_VAR,
-    `${Math.max(height, 48)}px`,
-  );
+  const active = dialog.classList.contains("CybotCookiebotDialogActive");
+  if (!active) {
+    armVisibleBanner(dialog);
+    document.documentElement.classList.remove(BANNER_OPEN_CLASS);
+    document.documentElement.style.removeProperty(BANNER_HEIGHT_VAR);
+    return { open: false, usable: false };
+  }
+
+  const usable = isBannerVisiblyUsable(dialog);
+
+  if (usable) {
+    armVisibleBanner(dialog);
+    document.documentElement.classList.add(BANNER_OPEN_CLASS);
+    const height = Math.ceil(dialog.getBoundingClientRect().height);
+    document.documentElement.style.setProperty(
+      BANNER_HEIGHT_VAR,
+      `${Math.max(height, 48)}px`,
+    );
+    return { open: true, usable: true };
+  }
+
+  // Active but not visibly usable → never block the page underneath.
+  disarmInvisibleBanner(dialog);
+  return { open: false, usable: false };
 }
 
 function enhanceCookieBanner() {
@@ -200,13 +300,17 @@ function enhanceCookieBanner() {
 
 function attachDialogObserver(scheduleEnhance: () => void) {
   const dialog = document.getElementById("CybotCookiebotDialog");
-  if (!(dialog instanceof HTMLElement) || dialog.dataset.raduraObserved === "1") return;
+  if (!(dialog instanceof HTMLElement)) return;
+
+  // Re-bind if Cookiebot replaced the dialog node.
+  if (dialog.dataset.raduraObserved === "1") return;
 
   dialog.dataset.raduraObserved = "1";
   new MutationObserver(scheduleEnhance).observe(dialog, {
     subtree: true,
+    childList: true,
     attributes: true,
-    attributeFilter: ["aria-selected", "class", "style"],
+    attributeFilter: ["aria-selected", "class", "style", "aria-hidden"],
   });
 }
 
@@ -229,14 +333,13 @@ export function CookiebotBannerEnhancer() {
         const dialog = document.getElementById("CybotCookiebotDialog");
         if (!(dialog instanceof HTMLElement)) {
           syncBannerOpenState(null);
-          stopPolling();
+          // Keep polling — Cookiebot may inject the dialog later, or recreate it.
           return;
         }
+
+        attachDialogObserver(scheduleEnhance);
         enhanceCookieBanner();
-        if (!dialog.classList.contains("CybotCookiebotDialogActive")) {
-          stopPolling();
-        }
-      }, 400);
+      }, VISIBILITY_POLL_MS);
     };
 
     const scheduleEnhance = () => {
@@ -244,16 +347,15 @@ export function CookiebotBannerEnhancer() {
       scheduled = true;
       window.requestAnimationFrame(() => {
         scheduled = false;
-        if (enhanceCookieBanner()) {
-          attachDialogObserver(scheduleEnhance);
-          startPolling();
-        }
+        enhanceCookieBanner();
+        attachDialogObserver(scheduleEnhance);
+        startPolling();
       });
     };
 
     const scheduleEnhanceSoon = () => {
       scheduleEnhance();
-      for (const delay of [50, 150, 350, 700]) {
+      for (const delay of [50, 150, 350, 700, 1200]) {
         const timer = window.setTimeout(() => {
           delayedTimers.delete(timer);
           scheduleEnhance();
