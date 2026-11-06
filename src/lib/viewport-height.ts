@@ -61,3 +61,8 @@ export function applyAppHeight(): void {
 export function viewportHeightInitScript(): string {
   return `(function(){try{var inner=window.innerHeight,vv=window.visualViewport,visual=vv?vv.height:inner;function m(u){var p=document.createElement("div");p.style.cssText="position:fixed;top:0;left:0;width:0;height:100"+u+";visibility:hidden;pointer-events:none";document.documentElement.appendChild(p);var x=p.getBoundingClientRect().height;p.remove();return x||0}var dvh=m("dvh"),lvh=m("lvh"),svh=m("svh"),h=Math.max(dvh,lvh,svh,inner),offset=0,ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1;if(ios&&window.innerWidth<768){var visible=Math.max(dvh,svh,visual||0);h=visible>0?visible:inner;offset=Math.max(0,lvh-h)}if(window.innerWidth<=767){document.documentElement.classList.add("mobile-native-scroll")}document.documentElement.style.setProperty("--safari-ui-offset",offset+"px");document.documentElement.style.setProperty("--app-height",h+"px");document.documentElement.style.setProperty("--app-height-half",(h/2)+"px")}catch(e){}})();`;
 }
+
+/** Sets --desktop-scale for browsers that can't divide lengths in CSS (see globals.css). */
+export function desktopScaleInitScript(): string {
+  return `(function(){try{if(CSS.supports("scale","calc(100vw / 1280px)"))return;var r=document.documentElement;function u(){var w=window.innerWidth;if(w>1280){r.style.setProperty("--desktop-scale",String(w/1280))}else{r.style.removeProperty("--desktop-scale")}}u();window.addEventListener("resize",u)}catch(e){}})();`;
+}

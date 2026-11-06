@@ -10,7 +10,7 @@ import {
   sneakyTimes,
   unifrakturMaguntia,
 } from "@/lib/fonts";
-import { viewportHeightInitScript } from "@/lib/viewport-height";
+import { desktopScaleInitScript, viewportHeightInitScript } from "@/lib/viewport-height";
 import "./globals.css";
 
 const cookiebotId = process.env.NEXT_PUBLIC_COOKIEBOT_ID;
@@ -64,6 +64,12 @@ export default function RootLayout({
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: viewportHeightInitScript(),
+          }}
+        />
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: desktopScaleInitScript(),
           }}
         />
       </head>

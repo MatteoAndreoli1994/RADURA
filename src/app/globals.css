@@ -603,9 +603,17 @@ video {
 /* Desktop > 1280px: lock layout to 1280px design and scale up proportionally */
 @media (min-width: 1281px) {
   :root {
-    /* length / length → unitless ratio (e.g. 1.5 at 1920px) */
-    --desktop-scale: calc(100vw / var(--design-width));
     --site-grid-margin-x: calc(50px * var(--desktop-scale));
+  }
+
+  /* length / length → unitless ratio (e.g. 1.5 at 1920px). Older browsers (e.g.
+     Chrome 131) can't do this: the shell transform would be invalid and the site
+     would start at left: 50%. Those get the ratio from desktopScaleInitScript(),
+     or stay at scale 1 without JS. */
+  @supports (scale: calc(100vw / 1280px)) {
+    :root {
+      --desktop-scale: calc(100vw / var(--design-width));
+    }
   }
 
   .site-shell-scale {
